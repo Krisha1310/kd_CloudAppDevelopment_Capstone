@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.csrf import csrf_exempt
 # from .models import related models
 # from .restapis import related methods
 from django.contrib.auth import login, logout, authenticate
@@ -27,6 +28,7 @@ def contact(request):
     return render(request, "djangoapp/contact.html")
 
 # Create a `login_request` view to handle sign in request
+@csrf_exempt
 def login_request(request):
     context = {}
     # Handles POST request
@@ -48,6 +50,7 @@ def login_request(request):
 
 
 # Create a `logout_request` view to handle sign out request
+@csrf_exempt
 def logout_request(request):
     # Get the user object based on session id in request
     print("Log out the user `{}`".format(request.user.username))
@@ -56,6 +59,7 @@ def logout_request(request):
     return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
+@csrf_exempt
 def registration_request(request):
     context = {}
     if request.method == 'GET':
@@ -75,7 +79,7 @@ def registration_request(request):
             user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                                             password=password)
             login(request, user)
-            return redirect("djangoapp:index")
+            return redirect("djangoapp:login")
         else:
             return render(request, 'djangoapp/registration.html', context)
 
