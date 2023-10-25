@@ -83,6 +83,15 @@ class CarDealer(models.Model):
 
 # <HINT> Create a plain Python class `DealerReview` to hold review data
 class DealerReview(models.Model):
-    review = models.CharField(max_length=30)
+    dealership = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+    purchase = models.CharField(max_length=30)
+    review = models.CharField(null=False ,max_length=30)
+    purchase_date = models.DateField(null=True)
+    car_make = models.CharField(max_length=30)
+    car_model = models.CharField(max_length=30)
+    car_year = models.DateField(null=True)
+    sentiment = models.CharField(max_length=30)
+    id = models.CharField(primary_key=True,max_length=30)
     def __str__(self):
         return "DealerReview: " + self.review
